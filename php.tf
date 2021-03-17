@@ -77,6 +77,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "php_hpa" {
     target_cpu_utilization_percentage = 80
 
     scale_target_ref {
+      api_version = "apps/v1"
       kind = "Deployment"
       name = "php-to-scaleout"
     }
