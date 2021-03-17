@@ -37,17 +37,17 @@ pipeline {
             steps {
                 script {
                     if (env.ACTION == 'destroy') {
-                        sh('terraform refresh')
-                        sh('terraform destroy --auto-approve')
+                        sh('terraform refresh --var region=$REGION --var cluster_name=$CLUSTER_NAME')
+                        sh('terraform destroy --auto-approve --var region=$REGION --var cluster_name=$CLUSTER_NAME')
                         sh('kubectl delete -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
                     }
                     if (env.ACTION == 'apply') {
-                        sh('terraform refresh')
-                        sh('terraform apply --auto-approve')
+                        sh('terraform refresh --var region=$REGION --var cluster_name=$CLUSTER_NAME')
+                        sh('terraform apply --auto-approve --var region=$REGION --var cluster_name=$CLUSTER_NAME')
                     }
                     if (env.ACTION == 'create') {
                         sh('kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
-                        sh('terraform apply --auto-approve')
+                        sh('terraform apply --auto-approve --var region=$REGION --var cluster_name=$CLUSTER_NAME')
                     }
                 }
             }
