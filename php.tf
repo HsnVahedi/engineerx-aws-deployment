@@ -29,12 +29,12 @@ resource "kubernetes_deployment" "php_to_scaleout" {
           }
 
           resources {
-            limits = {
+            limits {
               cpu    = "300m"
               memory = "512Mi"
             }
 
-            requests = {
+            requests {
               cpu    = "200m"
               memory = "512Mi"
             }
