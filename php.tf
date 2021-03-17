@@ -61,7 +61,7 @@ resource "kubernetes_service" "php" {
       app = "php"
     }
 
-    # type = "LoadBalancer"
+    type = "LoadBalancer"
   }
 }
 
@@ -74,7 +74,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "php_hpa" {
     max_replicas = 10
     min_replicas = 1
 
-    target_cpu_utilization_percentage = 50
+    target_cpu_utilization_percentage = 20
 
     scale_target_ref {
       api_version = "apps/v1"
