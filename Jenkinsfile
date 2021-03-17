@@ -43,6 +43,7 @@ pipeline {
                     }
                     if (env.ACTION == 'create') {
                         sh('kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
+                        sh("kubectl get apiservice v1beta1.metrics.k8s.io -o json | jq '.status'")
                         sh('terraform apply --auto-approve')
                         // sh('kubectl autoscale deployment php-to-scaleout --cpu-percent=50 --min=1 --max=10')
                     }
