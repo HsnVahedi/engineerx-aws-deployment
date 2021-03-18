@@ -17,3 +17,7 @@ variable "dockerhub_username" {
 variable "dockerhub_password" {
   type = string 
 }
+
+variable "efs_id" {
+  type = string 
+}
