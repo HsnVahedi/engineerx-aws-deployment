@@ -9,7 +9,8 @@ pipeline {
         string(name: 'ACTION', defaultValue: 'apply')
         string(name: 'BACKEND_VERSION', defaultValue: 'latest')
         string(name: 'FRONTEND_VERSION', defaultValue: 'latest')
-        string(name: 'EFS_ID')
+        string(name: 'MEDIA_EFS_ID')
+        string(name: 'STATIC_EFS_ID')
     }
     environment {
         ACCESS_KEY_ID = credentials('aws-access-key-id')
@@ -20,7 +21,8 @@ pipeline {
         BACKEND_VERSION = "${params.BACKEND_VERSION}"
         FRONTEND_VERSION = "${params.FRONTEND_VERSION}"
         POSTGRES_PASSWORD = credentials('postgres-password')
-        EFS_ID = "${params.EFS_ID}"
+        MEDIA_EFS_ID = "${params.MEDIA_EFS_ID}"
+        STATIC_EFS_ID = "${params.STATIC_EFS_ID}"
         DOCKERHUB_CRED = credentials('dockerhub-repo')  
     }
     stages {
@@ -45,17 +47,17 @@ pipeline {
             steps {
                 script {
                     if (env.ACTION == 'destroy') {
-                        sh('terraform refresh --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD')
-                        sh('terraform destroy --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform refresh --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var static_efs_id=$STATIC_EFS_ID --var media_efs_id=$MEDIA_EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD')
+                        sh('terraform destroy --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var static_efs_id=$STATIC_EFS_ID --var media_efs_id=$MEDIA_EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                         sh('kubectl delete -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
                     }
                     if (env.ACTION == 'apply') {
-                        sh('terraform refresh --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD')
-                        sh('terraform apply --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform refresh --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var static_efs_id=$STATIC_EFS_ID --var media_efs_id=$MEDIA_EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD')
+                        sh('terraform apply --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var static_efs_id=$STATIC_EFS_ID --var media_efs_id=$MEDIA_EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                     }
                     if (env.ACTION == 'create') {
                         sh('kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
-                        sh('terraform apply --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform apply --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var static_efs_id=$STATIC_EFS_ID --var media_efs_id=$MEDIA_EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                     }
                 }
             }
