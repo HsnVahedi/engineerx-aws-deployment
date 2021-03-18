@@ -15,7 +15,7 @@ resource "kubernetes_service" "ingress" {
     }
 
     selector = {
-      app = "backend-ingress"
+      app = "ingress"
     }
 
     type = "LoadBalancer"

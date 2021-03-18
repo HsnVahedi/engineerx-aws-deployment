@@ -222,3 +222,24 @@ resource "kubernetes_deployment" "backend_ingress" {
     }
   }
 }
+
+resource "kubernetes_service" "backend_ingress" {
+  metadata {
+    name = "backendingress"
+    labels = {
+      role = "deployment"
+    }
+  }
+
+  spec {
+    port {
+      port        = 80
+      target_port = "80"
+    }
+
+    selector = {
+      app = "backend-ingress"
+    }
+
+  }
+}
