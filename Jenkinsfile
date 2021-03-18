@@ -21,6 +21,7 @@ pipeline {
         FRONTEND_VERSION = "${params.FRONTEND_VERSION}"
         POSTGRES_PASSWORD = credentials('postgres-password')
         EFS_ID = "${params.EFS_ID}"
+        DOCKERHUB_CRED = credentials('dockerhub-repo')  
     }
     stages {
         stage('Providing Access Keys') {
@@ -44,17 +45,17 @@ pipeline {
             steps {
                 script {
                     if (env.ACTION == 'destroy') {
-                        sh('terraform refresh --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD')
-                        sh('terraform destroy --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform refresh --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD')
+                        sh('terraform destroy --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                         sh('kubectl delete -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
                     }
                     if (env.ACTION == 'apply') {
-                        sh('terraform refresh --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD')
-                        sh('terraform apply --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform refresh --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD')
+                        sh('terraform apply --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                     }
                     if (env.ACTION == 'create') {
                         sh('kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
-                        sh('terraform apply --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform apply --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var efs_id=$EFS_ID --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                     }
                 }
             }
