@@ -27,10 +27,18 @@ resource "kubernetes_deployment" "backend" {
 
       spec {
         volume {
-          name = "data"
+          name = "media"
 
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.efs_storage_claim.metadata[0].name
+            claim_name = kubernetes_persistent_volume_claim.media_storage_claim.metadata[0].name
+          }
+        }
+
+        volume {
+          name = "static"
+
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.static_storage_claim.metadata[0].name
           }
         }
 
@@ -68,15 +76,15 @@ resource "kubernetes_deployment" "backend" {
           }
 
           volume_mount {
-            name       = "data"
+            name       = "static"
             mount_path = "/app/static"
-            sub_path   = "static"
+            # sub_path   = "static"
           }
 
           volume_mount {
-            name       = "data"
+            name       = "media"
             mount_path = "/app/media"
-            sub_path   = "media"
+            # sub_path   = "media"
           }
 
           liveness_probe {
@@ -139,10 +147,17 @@ resource "kubernetes_deployment" "backend_ingress" {
 
       spec {
         volume {
-          name = "data"
+          name = "media"
 
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.efs_storage_claim.metadata[0].name
+            claim_name = kubernetes_persistent_volume_claim.media_storage_claim.metadata[0].name
+          }
+        }
+        volume {
+          name = "static"
+
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.static_storage_claim.metadata[0].name
           }
         }
 
@@ -167,15 +182,15 @@ resource "kubernetes_deployment" "backend_ingress" {
           }
 
           volume_mount {
-            name       = "data"
+            name       = "static"
             mount_path = "/home/app/web/static"
-            sub_path   = "static"
+            # sub_path   = "static"
           }
 
           volume_mount {
-            name       = "data"
+            name       = "media"
             mount_path = "/home/app/web/media"
-            sub_path   = "media"
+            # sub_path   = "media"
           }
         }
         image_pull_secrets {
