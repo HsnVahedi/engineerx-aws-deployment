@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "backend" {
           name = "data"
 
           persistent_volume_claim {
-            claim_name = local.efs_pvc_name
+            claim_name = kubernetes_persistent_volume_claim.efs_storage_claim.metadata[0].name
           }
         }
 
@@ -142,7 +142,7 @@ resource "kubernetes_deployment" "backend_ingress" {
           name = "data"
 
           persistent_volume_claim {
-            claim_name = local.efs_pvc_name
+            claim_name = kubernetes_persistent_volume_claim.efs_storage_claim.metadata[0].name
           }
         }
 

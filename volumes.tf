@@ -10,7 +10,7 @@ resource "kubernetes_storage_class" "efs_sc" {
 
 resource "kubernetes_persistent_volume" "efs_pv" {
   metadata {
-    name = "efs"
+    name = "efs" 
     labels = {
       role = "deployment"
     }
@@ -37,7 +37,7 @@ resource "kubernetes_persistent_volume" "efs_pv" {
 
 resource "kubernetes_persistent_volume_claim" "efs_storage_claim" {
   metadata {
-    name      = local.efs_pvc_name
+    name      = "efs" 
     namespace = "storage"
     labels = {
       role = "deployment"
