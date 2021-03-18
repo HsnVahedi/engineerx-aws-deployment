@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "frontend" {
               port = "3000"
             }
 
-            initial_delay_seconds = 550
+            initial_delay_seconds = 100
             period_seconds        = 5
           }
 
@@ -74,7 +74,7 @@ resource "kubernetes_deployment" "frontend" {
               port = "3000"
             }
 
-            initial_delay_seconds = 550
+            initial_delay_seconds = 100
             period_seconds        = 5
           }
 
