@@ -118,6 +118,27 @@ resource "kubernetes_deployment" "backend" {
   }
 }
 
+resource "kubernetes_service" "backend" {
+  metadata {
+    name = "backend"
+    labels = {
+      role = "deployment"
+    }
+  }
+
+  spec {
+    port {
+      port        = 80
+      target_port = "8000"
+    }
+
+    selector = {
+      app = "backend"
+    }
+
+  }
+}
+
 resource "kubernetes_deployment" "backend_ingress" {
   metadata {
     name = "backend-ingress"
