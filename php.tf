@@ -45,25 +45,25 @@ resource "kubernetes_deployment" "php_to_scaleout" {
   }
 }
 
-resource "kubernetes_service" "php" {
-  metadata {
-    name = "php"
-  }
+# resource "kubernetes_service" "php" {
+#   metadata {
+#     name = "php"
+#   }
 
-  spec {
-    port {
-      protocol    = "TCP"
-      port        = 80
-      target_port = "80"
-    }
+#   spec {
+#     port {
+#       protocol    = "TCP"
+#       port        = 80
+#       target_port = "80"
+#     }
 
-    selector = {
-      app = "php"
-    }
+#     selector = {
+#       app = "php"
+#     }
 
-    type = "LoadBalancer"
-  }
-}
+#     type = "LoadBalancer"
+#   }
+# }
 
 resource "kubernetes_horizontal_pod_autoscaler" "php_hpa" {
   metadata {
