@@ -43,7 +43,7 @@ resource "kubernetes_deployment" "frontend" {
             }
 
             requests = {
-              memory = "512Mi"
+              memory = "1024Mi"
               cpu    = "700m"
             }
           }
