@@ -33,13 +33,13 @@ resource "kubernetes_deployment" "backend_postgres" {
 
           resources {
             limits = {
-              cpu    = "100m"
-              memory = "64Mi"
+              cpu    = "300m"
+              memory = "1024Mi"
             }
 
             requests = {
-              memory = "64Mi"
-              cpu    = "100m"
+              memory = "512Mi"
+              cpu    = "200m"
             }
           }
 
