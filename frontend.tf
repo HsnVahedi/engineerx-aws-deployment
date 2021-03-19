@@ -38,13 +38,13 @@ resource "kubernetes_deployment" "frontend" {
 
           resources {
             limits = {
-              cpu    = "2000m"
+              cpu    = "1200m"
               memory = "1024Mi"
             }
 
             requests = {
               memory = "512Mi"
-              cpu    = "1500m"
+              cpu    = "700m"
             }
           }
 
