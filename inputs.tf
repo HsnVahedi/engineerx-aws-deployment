@@ -18,6 +18,10 @@ variable "dockerhub_password" {
   type = string 
 }
 
+variable "region" {
+  type = string
+}
+
 # variable "media_efs_id" {
 #   type = string 
 # }
