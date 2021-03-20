@@ -9,8 +9,8 @@ pipeline {
         string(name: 'ACTION', defaultValue: 'apply')
         string(name: 'BACKEND_VERSION', defaultValue: 'latest')
         string(name: 'FRONTEND_VERSION', defaultValue: 'latest')
-        string(name: 'MEDIA_EFS_ID')
-        string(name: 'STATIC_EFS_ID')
+        // string(name: 'MEDIA_EFS_ID')
+        // string(name: 'STATIC_EFS_ID')
     }
     environment {
         ACCESS_KEY_ID = credentials('aws-access-key-id')
