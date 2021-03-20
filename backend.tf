@@ -95,7 +95,7 @@ resource "kubernetes_deployment" "backend" {
           }
           env {
             name = "POSTGRES_HOST"
-            value = aws_db_instance.database.address
+            value = data.aws_db_instance.database.address
           }
 
           volume_mount {
