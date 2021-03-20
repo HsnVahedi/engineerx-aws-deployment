@@ -1,3 +1,7 @@
+data "aws_db_instance" "database" {
+  db_instance_identifier = "engineerx"
+}
+
 resource "kubernetes_deployment" "backend" {
   metadata {
     name = "backend"
@@ -88,6 +92,10 @@ resource "kubernetes_deployment" "backend" {
                 key  = "password"
               }
             }
+          }
+          env {
+            name = "POSTGRES_HOST"
+            value = aws_db_instance.database.address
           }
 
           volume_mount {
