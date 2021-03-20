@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "backend" {
           name = "media"
 
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.media_storage_claim.metadata[0].name
+            claim_name = "media-efs"
           }
         }
 
@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "backend" {
           name = "static"
 
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.static_storage_claim.metadata[0].name
+            claim_name = "static-efs" 
           }
         }
 
@@ -171,14 +171,14 @@ resource "kubernetes_deployment" "backend_ingress" {
           name = "media"
 
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.media_storage_claim.metadata[0].name
+            claim_name = "media-efs" 
           }
         }
         volume {
           name = "static"
 
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.static_storage_claim.metadata[0].name
+            claim_name = "static-efs"
           }
         }
 
