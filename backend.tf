@@ -46,19 +46,19 @@ resource "kubernetes_deployment" "backend" {
           }
         }
 
-        affinity {
-          node_affinity {
-            required_during_scheduling_ignored_during_execution {
-              node_selector_term {
-                match_expressions {
-                  key = "vpc.amazonaws.com/has-trunk-attached"
-                  operator = "In"
-                  values = ["true"]
-                }
-              }
-            }
-          }
-        }
+        # affinity {
+        #   node_affinity {
+        #     required_during_scheduling_ignored_during_execution {
+        #       node_selector_term {
+        #         match_expressions {
+        #           key = "vpc.amazonaws.com/has-trunk-attached"
+        #           operator = "In"
+        #           values = ["true"]
+        #         }
+        #       }
+        #     }
+        #   }
+        # }
 
 
         container {
