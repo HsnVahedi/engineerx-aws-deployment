@@ -9,20 +9,18 @@ pipeline {
         string(name: 'ACTION', defaultValue: 'apply')
         string(name: 'BACKEND_VERSION', defaultValue: 'latest')
         string(name: 'FRONTEND_VERSION', defaultValue: 'latest')
-        // string(name: 'MEDIA_EFS_ID')
-        // string(name: 'STATIC_EFS_ID')
+        string(name: 'CLUSTER_NAME', defaultValue: 'engineerx')
+        string(name: 'REGION', defaultValue: 'us-east-2')
     }
     environment {
         ACCESS_KEY_ID = credentials('aws-access-key-id')
         SECRET_KEY = credentials('aws-secret-key')
         ACTION = "${params.ACTION}"
-        REGION = "us-east-2"
-        CLUSTER_NAME = "engineerx"
+        REGION = "${params.REGION}"
+        CLUSTER_NAME = "${params.CLUSTER_NAME}"
         BACKEND_VERSION = "${params.BACKEND_VERSION}"
         FRONTEND_VERSION = "${params.FRONTEND_VERSION}"
         POSTGRES_PASSWORD = credentials('postgres-password')
-        // MEDIA_EFS_ID = "${params.MEDIA_EFS_ID}"
-        // STATIC_EFS_ID = "${params.STATIC_EFS_ID}"
         DOCKERHUB_CRED = credentials('dockerhub-repo')  
     }
     stages {
