@@ -64,8 +64,7 @@ resource "kubernetes_deployment" "backend" {
         container {
           name    = "backend"
           image   = "hsndocker/backend:${var.backend_version}"
-          command = ["bash"]
-          args    = ["start.sh"]
+          command = ["/bin/bash", "-c", "rm manage.py && mv manage.prod.py manage.py && rm engineerx/wsgi.py && mv engineerx/wsgi.prod.py engineerx/wsgi.py && ./start.sh"]
 
           port {
             container_port = 8000
