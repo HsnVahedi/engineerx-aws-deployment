@@ -1,9 +1,11 @@
 variable "backend_version" {
-    type = string
+  type    = string
+  default = "latest"
 }
 
 variable "frontend_version" {
-    type = string
+  type    = string
+  default = "latest"
 }
 
 variable "postgres_password" {
@@ -11,21 +13,14 @@ variable "postgres_password" {
 }
 
 variable "dockerhub_username" {
-  type = string 
-}
-
-variable "dockerhub_password" {
-  type = string 
-}
-
-variable "region" {
   type = string
 }
 
-# variable "media_efs_id" {
-#   type = string 
-# }
+variable "dockerhub_password" {
+  type = string
+}
 
-# variable "static_efs_id" {
-#   type = string 
-# }
+variable "region" {
+  type    = string
+  default = "us-east-2"
+}
