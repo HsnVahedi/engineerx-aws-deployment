@@ -31,6 +31,7 @@ resource "kubernetes_deployment" "frontend" {
           name    = "frontend"
           image   = "hsndocker/frontend:${var.frontend_version}"
           command = ["/bin/sh", "-c", "npm run build && npm run start"]
+          image_pull_policy = "Always"
 
           port {
             container_port = 3000
@@ -140,6 +141,7 @@ resource "kubernetes_deployment" "ingress" {
         container {
           name  = "nginx"
           image = "hsndocker/nginx:${var.frontend_version}"
+          image_pull_policy = "Always"
 
           resources {
             limits = {

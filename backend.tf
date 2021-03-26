@@ -64,6 +64,7 @@ resource "kubernetes_deployment" "backend" {
         container {
           name    = "backend"
           image   = "hsndocker/backend:${var.backend_version}"
+          image_pull_policy = "Always"
           command = ["/bin/bash", "-c", "rm manage.py && mv manage.prod.py manage.py && rm engineerx/wsgi.py && mv engineerx/wsgi.prod.py engineerx/wsgi.py && ./start.sh"]
 
           port {
@@ -207,6 +208,7 @@ resource "kubernetes_deployment" "backend_ingress" {
         container {
           name  = "backend-nginx"
           image = "hsndocker/backend-nginx:${var.backend_version}"
+          image_pull_policy = "Always"
 
           resources {
             limits = {
