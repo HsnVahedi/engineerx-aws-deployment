@@ -3,10 +3,6 @@ data "aws_db_instance" "database" {
 }
 
 
-data "aws_elb" "ingress" {
-  name = "ingress"
-}
-
 resource "kubernetes_deployment" "backend" {
   metadata {
     name = "backend"
