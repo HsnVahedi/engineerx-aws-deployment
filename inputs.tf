@@ -25,6 +25,6 @@ variable "region" {
   default = "us-east-2"
 }
 
-variable "djang_secret_key" {
+variable "django_secret_key" {
   type    = string
 }
