@@ -114,7 +114,7 @@ resource "kubernetes_deployment" "backend" {
           }
           env {
             name = "ALLOWED_HOST"
-            value = data.aws_elb.ingress.dns_name 
+            value = var.host 
           }
 
           volume_mount {

@@ -11,6 +11,7 @@ pipeline {
         string(name: 'FRONTEND_VERSION', defaultValue: 'latest')
         string(name: 'CLUSTER_NAME', defaultValue: 'engineerx')
         string(name: 'REGION', defaultValue: 'us-east-2')
+        string(name: 'HOST')
     }
     environment {
         ACCESS_KEY_ID = credentials('aws-access-key-id')
@@ -23,6 +24,7 @@ pipeline {
         POSTGRES_PASSWORD = credentials('postgres-password')
         DOCKERHUB_CRED = credentials('dockerhub-repo')
         DJANGO_SECRET_KEY = credentials('django-secret-key')
+        HOST = "${params.HOST}"
     }
     stages {
         stage('Providing Access Keys') {
@@ -46,15 +48,15 @@ pipeline {
             steps {
                 script {
                     if (env.ACTION == 'destroy') {
-                        sh('terraform destroy --var django_secret_key=$DJANGO_SECRET_KEY --var region=$REGION --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform destroy --var host=$HOST --var django_secret_key=$DJANGO_SECRET_KEY --var region=$REGION --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                         sh('kubectl delete -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
                     }
                     if (env.ACTION == 'apply') {
-                        sh('terraform apply --var django_secret_key=$DJANGO_SECRET_KEY --var region=$REGION --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform apply --var host=$HOST --var django_secret_key=$DJANGO_SECRET_KEY --var region=$REGION --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                     }
                     if (env.ACTION == 'create') {
                         sh('kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml')
-                        sh('terraform apply  --var django_secret_key=$DJANGO_SECRET_KEY --var region=$REGION --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
+                        sh('terraform apply --var host=$HOST --var django_secret_key=$DJANGO_SECRET_KEY --var region=$REGION --var dockerhub_username=$DOCKERHUB_CRED_USR --var dockerhub_password=$DOCKERHUB_CRED_PSW --var backend_version=$BACKEND_VERSION --var frontend_version=$FRONTEND_VERSION --var postgres_password=$POSTGRES_PASSWORD --auto-approve')
                     }
                 }
             }

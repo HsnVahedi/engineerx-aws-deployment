@@ -28,3 +28,7 @@ variable "region" {
 variable "django_secret_key" {
   type    = string
 }
+
+variable "host" {
+  type    = string
+}
