@@ -11,6 +11,19 @@ resource "kubernetes_secret" "postgres_password" {
   }
 }
 
+resource "kubernetes_secret" "django_secret_key" {
+  metadata {
+    name = "django-secret-key"
+    labels = {
+      role = "deployment"
+    }
+  }
+
+  data = {
+    secret_key = var.django_secret_key
+  }
+}
+
 resource "kubernetes_secret" "dockerhub_cred" {
   metadata {
     name = "dockerhub-cred"

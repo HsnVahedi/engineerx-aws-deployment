@@ -24,3 +24,7 @@ variable "region" {
   type    = string
   default = "us-east-2"
 }
+
+variable "djang_secret_key" {
+  type    = string
+}

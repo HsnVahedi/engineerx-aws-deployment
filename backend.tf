@@ -2,6 +2,11 @@ data "aws_db_instance" "database" {
   db_instance_identifier = "engineerx"
 }
 
+
+data "aws_elb" "ingress" {
+  name = "ingress"
+}
+
 resource "kubernetes_deployment" "backend" {
   metadata {
     name = "backend"
@@ -94,8 +99,22 @@ resource "kubernetes_deployment" "backend" {
             }
           }
           env {
+            name = "SECRET_KEY"
+
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret.django_secret_key.metadata[0].name
+                key  = "secret_key"
+              }
+            }
+          }
+          env {
             name = "POSTGRES_HOST"
             value = data.aws_db_instance.database.address
+          }
+          env {
+            name = "ALLOWED_HOST"
+            value = data.aws_elb.ingress.dns_name 
           }
 
           volume_mount {
