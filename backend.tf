@@ -148,7 +148,7 @@ resource "kubernetes_deployment" "backend" {
         }
 
         node_selector = {
-          "beta.kubernetes.io/instance-type" = "t3.small"
+          "beta.kubernetes.io/instance-type" = "t3.medium"
         }
 
         image_pull_secrets {
@@ -262,7 +262,7 @@ resource "kubernetes_deployment" "backend_ingress" {
         }
 
         node_selector = {
-          "beta.kubernetes.io/instance-type" = "t3.small"
+          "beta.kubernetes.io/instance-type" = "t3.medium"
         }
 
       }

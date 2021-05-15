@@ -84,7 +84,7 @@ resource "kubernetes_deployment" "frontend" {
           name = kubernetes_secret.dockerhub_cred.metadata[0].name
         }
         node_selector = {
-          "beta.kubernetes.io/instance-type" = "t3.small"
+          "beta.kubernetes.io/instance-type" = "t3.medium"
         }
       }
     }
@@ -167,7 +167,7 @@ resource "kubernetes_deployment" "ingress" {
           name = kubernetes_secret.dockerhub_cred.metadata[0].name
         }
         node_selector = {
-          "beta.kubernetes.io/instance-type" = "t3.small"
+          "beta.kubernetes.io/instance-type" = "t3.medium"
         }
       }
     }
