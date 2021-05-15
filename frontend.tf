@@ -83,6 +83,9 @@ resource "kubernetes_deployment" "frontend" {
         image_pull_secrets {
           name = kubernetes_secret.dockerhub_cred.metadata[0].name
         }
+        node_selector = {
+          "beta.kubernetes.io/instance-type" = "t3.small"
+        }
       }
     }
   }
@@ -162,6 +165,9 @@ resource "kubernetes_deployment" "ingress" {
         }
         image_pull_secrets {
           name = kubernetes_secret.dockerhub_cred.metadata[0].name
+        }
+        node_selector = {
+          "beta.kubernetes.io/instance-type" = "t3.small"
         }
       }
     }

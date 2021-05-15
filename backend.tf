@@ -147,6 +147,10 @@ resource "kubernetes_deployment" "backend" {
 
         }
 
+        node_selector = {
+          "beta.kubernetes.io/instance-type" = "t3.small"
+        }
+
         image_pull_secrets {
           name = kubernetes_secret.dockerhub_cred.metadata[0].name
         }
@@ -255,6 +259,10 @@ resource "kubernetes_deployment" "backend_ingress" {
         }
         image_pull_secrets {
           name = kubernetes_secret.dockerhub_cred.metadata[0].name
+        }
+
+        node_selector = {
+          "beta.kubernetes.io/instance-type" = "t3.small"
         }
 
       }
