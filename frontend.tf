@@ -45,7 +45,7 @@ resource "kubernetes_deployment" "frontend" {
 
             requests = {
               memory = "2048Mi"
-              cpu    = "1500m"
+              cpu    = "1700m"
             }
           }
 
@@ -167,7 +167,7 @@ resource "kubernetes_deployment" "ingress" {
           name = kubernetes_secret.dockerhub_cred.metadata[0].name
         }
         node_selector = {
-          "beta.kubernetes.io/instance-type" = "t3.medium"
+          "beta.kubernetes.io/instance-type" = "t3.small"
         }
       }
     }
